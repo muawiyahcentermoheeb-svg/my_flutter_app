@@ -25,12 +25,10 @@ jobs:
           cp -r source/lib/. app/lib/
           cp source/pubspec.yaml app/pubspec.yaml
 
-      # هذا الأمر هو المفتاح! لن يهتم بالمسار، بل سيطلب من الخادم البحث عن الملف بنفسه
-      - name: Bump compileSdkVersion to 36 (Automatic search)
-        run: |
-          echo "🔍 Searching for build.gradle file..."
-          find app -name "build.gradle" -exec sed -i 's/compileSdkVersion 34/compileSdkVersion 36/' {} \;
-          echo "✅ compileSdkVersion bumped to 36 successfully!"
+      # المسار الصحيح 100% هذه المرة (تم إصلاح الخطأ المطبعي)
+      - name: Bump compileSdkVersion to 36
+        working-directory: app
+        run: sed -i 's/compileSdkVersion 34/compileSdkVersion 36/' android/app/build.gradle
 
       - name: Get dependencies
         working-directory: app
